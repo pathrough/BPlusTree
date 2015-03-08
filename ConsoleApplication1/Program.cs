@@ -11,7 +11,7 @@ namespace ConsoleApplication1
     {
         static void Main(string[] args)
         {
-            DataBase db = new DataBase();
+            DataBase db = new OKV(2);
             for (; ; )
             {
                 string input = Console.ReadLine();
