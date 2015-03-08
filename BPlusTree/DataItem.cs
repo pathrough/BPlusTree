@@ -18,8 +18,14 @@ namespace BPlusTree
         }
     }
 
+   
     public class DataBlock
     {
+        public DataBlock(DataBase dataBase,List<DataItem> dataItemList)
+        {
+            this._DataBase = dataBase;
+            _DataItemList = dataItemList;
+        }
         private List<DataItem> _DataItemList = new List<DataItem>();
         public List<DataItem> DataItemList
         {
@@ -27,12 +33,30 @@ namespace BPlusTree
             set { _DataItemList = value; }
         }
 
-        public static int MaxItemCount
+        public int MaxItemCount
         {
             get
             {
-                return 2;
+                return this.DataBase.MaxDataBlockItemCount;
+            }
+        }
+
+        readonly DataBase _DataBase;
+        public DataBase DataBase
+        {
+            get
+            {
+                return _DataBase;
+            }
+        }
+
+        public int Count
+        {
+            get
+            {
+                return this.DataItemList.Count;
             }
         }
     }
+    
 }

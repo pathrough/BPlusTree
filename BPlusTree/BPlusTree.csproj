@@ -43,9 +43,13 @@
     <Compile Include="DataItem.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DataUtility.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="IndexItem.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="OKV.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
