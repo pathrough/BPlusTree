@@ -50,8 +50,15 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="OKVTest\Delete_Test.cs" />
+    <Compile Include="OKVTest\Insert_Test.cs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BPlusTree\BPlusTree.csproj">
+      <Project>{a822caf2-7130-4000-8530-6dc0b48cc37d}</Project>
+      <Name>BPlusTree</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
