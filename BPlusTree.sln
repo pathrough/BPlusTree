@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication1", "Cons
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BPlusTree", "BPlusTree\BPlusTree.csproj", "{A822CAF2-7130-4000-8530-6DC0B48CC37D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BPlusTreeUnitTestProject", "BPlusTreeUnitTestProject\BPlusTreeUnitTestProject.csproj", "{28B14F6A-7593-41F7-92C9-935869FB9ADA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{A822CAF2-7130-4000-8530-6DC0B48CC37D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A822CAF2-7130-4000-8530-6DC0B48CC37D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A822CAF2-7130-4000-8530-6DC0B48CC37D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28B14F6A-7593-41F7-92C9-935869FB9ADA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28B14F6A-7593-41F7-92C9-935869FB9ADA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28B14F6A-7593-41F7-92C9-935869FB9ADA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28B14F6A-7593-41F7-92C9-935869FB9ADA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
