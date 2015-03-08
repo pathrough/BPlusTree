@@ -46,11 +46,20 @@
     <Compile Include="DataUtility.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Host.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="IndexItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="KVO.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="OKV.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VOK.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

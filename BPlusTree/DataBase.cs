@@ -27,8 +27,7 @@ namespace BPlusTree
             set { _IndexItemList = value; }
         }
 
-       
-
+        
 
         public int DataItemCount
         {
@@ -62,6 +61,7 @@ namespace BPlusTree
                 }
                 else
                 {
+                   
                     if (indexItem.DataBlock.DataItemList.Count < indexItem.DataBlock.MaxItemCount)
                     {
                         indexItem.DataBlock.DataItemList.Add(dataItem);
@@ -98,6 +98,7 @@ namespace BPlusTree
             }
             else
             {
+               
                 IndexItemList.Add(
                     new IndexItem(this
                         , new DataBlock(this, new List<DataItem> { dataItem })
@@ -133,6 +134,7 @@ namespace BPlusTree
                 }
                 if (targetDataItem != null)
                 {
+                   
                     var sourceDataItemList = targetIndexItem.DataBlock.DataItemList;
                     //删除操作
                     var afterDelDataItemList = sourceDataItemList.Where(d => d.Equals(dataItem) == false).ToList();
@@ -159,6 +161,19 @@ namespace BPlusTree
                     return DeleteResult.NotFound;//找不到
                 }
                 return DeleteResult.Success;
+            }
+        }
+
+        List<DataItem> _DataItemList = new List<DataItem>();
+        public List<DataItem> DataItemList
+        {
+            get
+            {                
+                foreach(var item in this.IndexItemList)
+                {
+                    _DataItemList.AddRange(item.DataBlock.DataItemList);
+                }
+                return _DataItemList;
             }
         }
 

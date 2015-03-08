@@ -50,9 +50,12 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="HostTest\Host_Insert_Test.cs" />
+    <Compile Include="KVOTest\Insert_Test.cs" />
     <Compile Include="OKVTest\Delete_Test.cs" />
-    <Compile Include="OKVTest\Insert_Test.cs.cs" />
+    <Compile Include="OKVTest\Insert_Test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VOKTest\Insert_Test.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BPlusTree\BPlusTree.csproj">

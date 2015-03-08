@@ -72,5 +72,25 @@ namespace BPlusTreeUnitTestProject.OKVTest
             Assert.AreEqual(2, db.IndexLeafItemCount);//索引数量
             Assert.AreEqual(3, db.DataItemCount);//数据总量
         }
+
+        [TestMethod]
+        public void OKV_Insert_Check_Order()
+        {
+            int maxDataBlockItemCount = 2;
+            DataBase db = new OKV(maxDataBlockItemCount);
+
+            var input1 = new DataItem { ID = "1", Key = "2", Value = "3" };
+            db.Insert(input1);
+
+            var input2 = new DataItem { ID = "2", Key = "1", Value = "3" };
+            db.Insert(input2);
+
+            var input3 = new DataItem { ID = "3", Key = "2", Value = "1" };
+            db.Insert(input3);
+
+            Assert.IsTrue(db.DataItemList[0].Equals(input1));
+            Assert.IsTrue(db.DataItemList[1].Equals(input2));
+            Assert.IsTrue(db.DataItemList[2].Equals(input3));
+        }
     }
 }

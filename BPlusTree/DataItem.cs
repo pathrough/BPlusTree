@@ -18,6 +18,22 @@ namespace BPlusTree
         }
     }
 
+    public enum OperationType
+    {
+        Insert,
+        Delete
+    }
+    public class DataItemLog
+    {
+        public OperationType Operation { get; set; }
+        public DataItem DataItem { get; set; }
+        public DataItemLog(DataItem dataItem, OperationType operation)
+        {
+            this.Operation = operation;
+            this.DataItem = dataItem;
+        }
+    }
+
    
     public class DataBlock
     {

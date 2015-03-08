@@ -6,14 +6,9 @@ using System.Threading.Tasks;
 
 namespace BPlusTree
 {
-    public class OKV : DataBase
+    public class KVO:DataBase
     {
-        public OKV(int maxDataBlockItemCount) : base(maxDataBlockItemCount) { }
-        /// <summary>
-        /// 获取指定的DataItem可能归属的IndexItem
-        /// </summary>
-        /// <param name="dataItem"></param>
-        /// <returns>返回null表示此数据库完全没有索引和数据</returns>
+        public KVO(int maxDataBlockItemCount) : base(maxDataBlockItemCount) { }
         protected override IndexItem GetIndexItem(DataItem dataItem)
         {
             if (IndexItemList != null && IndexItemList.Count > 0)
@@ -22,28 +17,28 @@ namespace BPlusTree
                 IndexItem indexItem = null;
                 foreach (var index in this.IndexItemList)
                 {
-                    if (index.DataItem.ID.CompareTo(dataItem.ID) > 0)
+                    if (index.DataItem.Key.CompareTo(dataItem.Key) > 0)
                     {
                         //小于当前
                         indexItem = index;
                         break;
                     }
-                    else if (dataItem.ID == index.DataItem.ID)
+                    else if (dataItem.Key == index.DataItem.Key)
                     {
                         //等于当前
-                        if (dataItem.Key.CompareTo(index.DataItem.Key) > 0)
+                        if (dataItem.Value.CompareTo(index.DataItem.Value) > 0)
                         {
                             indexItem = index;
                             break;
                         }
-                        else if (dataItem.Key == index.DataItem.Key)
+                        else if (dataItem.Value == index.DataItem.Value)
                         {
-                            if (dataItem.Value.CompareTo(index.DataItem.Value) > 0)
+                            if (dataItem.ID.CompareTo(index.DataItem.ID) > 0)
                             {
                                 indexItem = index;
                                 break;
                             }
-                            else if (dataItem.Value == index.DataItem.Value)
+                            else if (dataItem.ID == index.DataItem.ID)
                             {
                                 indexItem = index;
                                 break;
@@ -77,12 +72,12 @@ namespace BPlusTree
 
         protected override List<IndexItem> Order(List<IndexItem> list)
         {
-            return list.OrderBy(d => d.DataItem.ID).ThenBy(d => d.DataItem.Key).ThenBy(d => d.DataItem.Value).ToList();
+            return list.OrderBy(d => d.DataItem.Key).ThenBy(d => d.DataItem.Value).ThenBy(d => d.DataItem.ID).ToList();
         }
 
         protected override List<DataItem> Order(List<DataItem> list)
         {
-            return list.OrderBy(d => d.ID).ThenBy(d => d.Key).ThenBy(d => d.Value).ToList();
+            return list.OrderBy(d => d.Key).ThenBy(d => d.Value).ThenBy(d => d.ID).ToList();
         }
     }
 }
