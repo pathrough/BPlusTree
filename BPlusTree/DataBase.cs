@@ -164,11 +164,12 @@ namespace BPlusTree
             }
         }
 
-        List<DataItem> _DataItemList = new List<DataItem>();
+        List<DataItem> _DataItemList = null;
         public List<DataItem> DataItemList
         {
             get
-            {                
+            {
+                _DataItemList = new List<DataItem>();
                 foreach(var item in this.IndexItemList)
                 {
                     _DataItemList.AddRange(item.DataBlock.DataItemList);
