@@ -11,8 +11,8 @@ namespace BPlusTreeUnitTestProject.OKVTest
         public void Delete_The_Only_Data()
         {
             int maxDataBlockItemCount = 2;
-            DataBase db = new OKV(maxDataBlockItemCount);
-            var input = new DataItem { ID = "0", Key = "0", Value = "0" };
+            DataBase<string, string, string> db = new OKV<string, string, string>(maxDataBlockItemCount);
+            var input = new DataItem<string, string, string> { ID = "0", Key = "0", Value = "0" };
             db.Insert(input);
             db.Delete(input);
             Assert.AreEqual(0, db.DataItemCount);
@@ -23,10 +23,10 @@ namespace BPlusTreeUnitTestProject.OKVTest
         public void Delete_Not_Exists_Data()
         {
             int maxDataBlockItemCount = 2;
-            DataBase db = new OKV(maxDataBlockItemCount);
+            DataBase<string, string, string> db = new OKV<string, string, string>(maxDataBlockItemCount);
 
-            db.Insert(new DataItem { ID = "0", Key = "0", Value = "0" });
-            var result = db.Delete(new DataItem { ID = "1", Key = "1", Value = "1" });
+            db.Insert(new DataItem<string, string, string> { ID = "0", Key = "0", Value = "0" });
+            var result = db.Delete(new DataItem<string, string, string> { ID = "1", Key = "1", Value = "1" });
             Assert.AreEqual(DeleteResult.NotFound, result);
             Assert.AreEqual(1, db.DataItemCount);
             Assert.AreEqual(1, db.IndexLeafItemCount);

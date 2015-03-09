@@ -6,13 +6,19 @@ using System.Threading.Tasks;
 
 namespace BPlusTree
 {
-    public class DataItem:IEquatable<DataItem>
+    public class DataItem<O, K, V> : IEquatable<DataItem<O, K, V>>
+        where O : IComparable<O>
+        where K : IComparable<K>
+        where V : IComparable<V>
+        //where O : IEquatable<O>
+        //where K : IEquatable<K>
+        //where V : IEquatable<V>
     {
-        public string ID { get; set; }
-        public string Key { get; set; }
-        public string Value { get; set; }
+        public O ID { get; set; }
+        public K Key { get; set; }
+        public V Value { get; set; }
 
-        public bool Equals(DataItem other)
+        public bool Equals(DataItem<O, K, V> other)
         {
             return this.ID.Equals(other.ID) && this.Key.Equals(other.Key) && this.Value.Equals(other.Value);
         }
@@ -23,27 +29,33 @@ namespace BPlusTree
         Insert,
         Delete
     }
-    public class DataItemLog
+    public class DataItemLog<O, K, V>
+        where O : IComparable<O>, IEquatable<O>
+        where K : IComparable<K>, IEquatable<K>
+        where V : IComparable<V>, IEquatable<V>
     {
         public OperationType Operation { get; set; }
-        public DataItem DataItem { get; set; }
-        public DataItemLog(DataItem dataItem, OperationType operation)
+        public DataItem<O, K, V> DataItem { get; set; }
+        public DataItemLog(DataItem<O, K, V> dataItem, OperationType operation)
         {
             this.Operation = operation;
             this.DataItem = dataItem;
         }
     }
 
-   
-    public class DataBlock
+
+    public class DataBlock<O, K, V>
+        where O : IComparable<O>, IEquatable<O>
+        where K : IComparable<K>, IEquatable<K>
+        where V : IComparable<V>, IEquatable<V>
     {
-        public DataBlock(DataBase dataBase,List<DataItem> dataItemList)
+        public DataBlock(DataBase<O, K, V> dataBase, List<DataItem<O, K, V>> dataItemList)
         {
             this._DataBase = dataBase;
             _DataItemList = dataItemList;
         }
-        private List<DataItem> _DataItemList = new List<DataItem>();
-        public List<DataItem> DataItemList
+        private List<DataItem<O, K, V>> _DataItemList = new List<DataItem<O, K, V>>();
+        public List<DataItem<O, K, V>> DataItemList
         {
             get { return _DataItemList; }
             set { _DataItemList = value; }
@@ -57,8 +69,8 @@ namespace BPlusTree
             }
         }
 
-        readonly DataBase _DataBase;
-        public DataBase DataBase
+        readonly DataBase<O, K, V> _DataBase;
+        public DataBase<O, K, V> DataBase
         {
             get
             {

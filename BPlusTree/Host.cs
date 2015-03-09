@@ -7,11 +7,14 @@ using System.Threading.Tasks;
 namespace BPlusTree
 {
 
-    public class Host
+    public class Host<O, K, V>
+        where O : IComparable<O>, IEquatable<O>
+        where K : IComparable<K>, IEquatable<K>
+        where V : IComparable<V>, IEquatable<V>
     {
-        List<DataBase> _DataBases = new List<DataBase>();
+        List<DataBase<O, K, V>> _DataBases = new List<DataBase<O, K, V>>();
 
-        public List<DataBase> DataBases
+        public List<DataBase<O, K, V>> DataBases
         {
             get { return _DataBases; }
         }
@@ -19,15 +22,15 @@ namespace BPlusTree
         {
             RollBackWhenStart();//回滚意外关机的导致事务未完成的工作，也许也可以根据日志自动完成事务
             //DataBases.Add(new OKV(maxDataBlockItemCount));
-            DataBases.Add(new KVO(maxDataBlockItemCount));
+            DataBases.Add(new KVO<O, K, V>(maxDataBlockItemCount));
             //DataBases.Add(new VOK(maxDataBlockItemCount));
         }
 
-        List<DataItemLog> _LogList = new List<DataItemLog>();
+        List<DataItemLog<O, K, V>> _LogList = new List<DataItemLog<O, K, V>>();
         /// <summary>
         /// 事务日志，插入成功后会删掉
         /// </summary>
-        public List<DataItemLog> LogList
+        public List<DataItemLog<O, K, V>> LogList
         {
             get
             {
@@ -54,7 +57,7 @@ namespace BPlusTree
             LogList.RemoveAll(d => true);//回滚完毕，删除事务日志
         }
 
-        public void RollBack(DataItemLog log)
+        public void RollBack(DataItemLog<O, K, V> log)
         {
             foreach (var db in _DataBases)
             {
@@ -70,12 +73,12 @@ namespace BPlusTree
             LogList.Remove(log);//回滚完毕，删除事务日志
         }
 
-        public void Insert(DataItem dataItem)
+        public void Insert(DataItem<O, K, V> dataItem)
         {
-            DataItemLog log = null;
+            DataItemLog<O, K, V> log = null;
             try
             {
-                log = new DataItemLog(dataItem, OperationType.Insert);
+                log = new DataItemLog<O, K, V>(dataItem, OperationType.Insert);
                 try
                 {
                     LogList.Add(log);//写入事务日志
@@ -100,12 +103,12 @@ namespace BPlusTree
             }
         }
 
-        public void Delete(DataItem dataItem)
+        public void Delete(DataItem<O, K, V> dataItem)
         {
-            DataItemLog log = null;
+            DataItemLog<O, K, V> log = null;
             try
             {
-                log = new DataItemLog(dataItem, OperationType.Delete);
+                log = new DataItemLog<O, K, V>(dataItem, OperationType.Delete);
                 try
                 {
                     LogList.Add(log);//写入事务日志

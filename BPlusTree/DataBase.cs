@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace BPlusTree
 {
-    public abstract class DataBase
+    public abstract class DataBase<O, K, V>
+        where O : IComparable<O>, IEquatable<O>
+        where K : IComparable<K>, IEquatable<K>
+        where V : IComparable<V>, IEquatable<V>
     {
         public DataBase(int maxDataBlockItemCount)
         {
@@ -20,8 +23,8 @@ namespace BPlusTree
                 return _MaxDataBlockItemCount;
             }
         }
-        private List<IndexItem> _IndexItemList = new List<IndexItem>();
-        public List<IndexItem> IndexItemList
+        private List<IndexItem<O, K, V>> _IndexItemList = new List<IndexItem<O, K, V>>();
+        public List<IndexItem<O, K, V>> IndexItemList
         {
             get { return _IndexItemList; }
             set { _IndexItemList = value; }
@@ -50,9 +53,9 @@ namespace BPlusTree
             }
         }
 
-        public InsertResult Insert(DataItem dataItem)
+        public InsertResult Insert(DataItem<O, K, V> dataItem)
         {
-            IndexItem indexItem = GetIndexItem(dataItem);
+            IndexItem<O, K, V> indexItem = GetIndexItem(dataItem);
             if (indexItem != null)
             {
                 if (indexItem.DataItem.Equals(dataItem))
@@ -85,8 +88,8 @@ namespace BPlusTree
 
                         //新增的                    
                         IndexItemList.Add(
-                            new IndexItem(this
-                                , new DataBlock(this, part2)
+                            new IndexItem<O, K, V>(this
+                                , new DataBlock<O, K, V>(this, part2)
                                 , part2.Last()
                             )
                         );
@@ -100,8 +103,8 @@ namespace BPlusTree
             {
                
                 IndexItemList.Add(
-                    new IndexItem(this
-                        , new DataBlock(this, new List<DataItem> { dataItem })
+                    new IndexItem<O, K, V>(this
+                        , new DataBlock<O, K, V>(this, new List<DataItem<O, K, V>> { dataItem })
                         , dataItem
                     )
                 );
@@ -114,16 +117,16 @@ namespace BPlusTree
         /// </summary>
         /// <param name="dataItem"></param>
         /// <returns></returns>
-        public DeleteResult Delete(DataItem dataItem)
+        public DeleteResult Delete(DataItem<O, K, V> dataItem)
         {
-            IndexItem targetIndexItem = GetIndexItem(dataItem);
+            IndexItem<O, K, V> targetIndexItem = GetIndexItem(dataItem);
             if (targetIndexItem == null)
             {
                 return DeleteResult.NotFound;//找不到
             }
             else
             {
-                DataItem targetDataItem = null;
+                DataItem<O, K, V> targetDataItem = null;
                 foreach (var item in targetIndexItem.DataBlock.DataItemList)
                 {
                     if (item.Equals(dataItem))
@@ -164,12 +167,12 @@ namespace BPlusTree
             }
         }
 
-        List<DataItem> _DataItemList = null;
-        public List<DataItem> DataItemList
+        List<DataItem<O, K, V>> _DataItemList = null;
+        public List<DataItem<O, K, V>> DataItemList
         {
             get
             {
-                _DataItemList = new List<DataItem>();
+                _DataItemList = new List<DataItem<O, K, V>>();
                 foreach(var item in this.IndexItemList)
                 {
                     _DataItemList.AddRange(item.DataBlock.DataItemList);
@@ -178,10 +181,10 @@ namespace BPlusTree
             }
         }
 
-        protected abstract IndexItem GetIndexItem(DataItem dataItem);
+        protected abstract IndexItem<O, K, V> GetIndexItem(DataItem<O, K, V> dataItem);
 
-        protected abstract List<IndexItem> Order(List<IndexItem> list);
-        protected abstract List<DataItem> Order(List<DataItem> list);
+        protected abstract List<IndexItem<O, K, V>> Order(List<IndexItem<O, K, V>> list);
+        protected abstract List<DataItem<O, K, V>> Order(List<DataItem<O, K, V>> list);
     }
 
     public enum InsertResult
@@ -195,13 +198,4 @@ namespace BPlusTree
         Success,
         NotFound
     }
-
-   //public interface IDataBase
-   //{
-   //    InsertResult Insert(DataItem dataItem);
-   //    DeleteResult Delete(DataItem dataItem);
-   //    IndexItem GetIndexItem(DataItem dataItem);
-   //}
-
-  
 }
