@@ -18,11 +18,11 @@ namespace BPlusTree
         {
             get { return _DataBases; }
         }
-        public Host(int maxDataBlockItemCount)
+        public Host(int maxDataBlockItemCount, int maxIndexBlockItemCount)
         {
             RollBackWhenStart();//回滚意外关机的导致事务未完成的工作，也许也可以根据日志自动完成事务
             //DataBases.Add(new OKV(maxDataBlockItemCount));
-            DataBases.Add(new KVO<O, K, V>(maxDataBlockItemCount));
+            DataBases.Add(new KVO<O, K, V>(maxDataBlockItemCount, maxIndexBlockItemCount));
             //DataBases.Add(new VOK(maxDataBlockItemCount));
         }
 

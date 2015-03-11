@@ -1,4 +1,5 @@
 ﻿using BPlusTree;
+using BPlusTree.DataItems;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,12 +12,12 @@ namespace ConsoleApplication1
     {
         static void Main(string[] args)
         {
-            Host<string, string, string> host = new Host<string, string, string>(2);
+            Host<string, string, string> host = new Host<string, string, string>(2,2);
             for (; ; )
             {
                 string input = Console.ReadLine();
                 string[] inputs = input.Split(',');
-                host.Insert(new DataItem<string, string, string> { ID = inputs[0], Key = inputs[1], Value = inputs[2] });
+                host.Insert(new StringStringStringItem { ID = inputs[0], Key = inputs[1], Value = inputs[2] });
                 Console.WriteLine("----------------------------");
                 foreach(var db in host.DataBases)
                 {

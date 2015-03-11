@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using BPlusTree;
+using BPlusTree.DataItems;
 
 namespace BPlusTreeUnitTestProject.HostTest
 {
@@ -11,8 +12,8 @@ namespace BPlusTreeUnitTestProject.HostTest
         public void Host_Insert_First_Data()
         {
             int maxDataBlockItemCount = 2;
-            Host<string, string, string> host = new Host<string, string, string>(maxDataBlockItemCount);
-            var input = new DataItem<string, string, string> { ID = "1", Key = "2", Value = "3" };
+            Host<string, string, string> host = new Host<string, string, string>(2,2);
+            var input = new StringStringStringItem { ID = "1", Key = "2", Value = "3" };
              host.Insert(input);
            
              foreach (var db in host.DataBases)
@@ -28,11 +29,11 @@ namespace BPlusTreeUnitTestProject.HostTest
         public void Host_Insert_Check_Order()
         {
             int maxDataBlockItemCount = 2;
-            Host<string, string, string> host = new Host<string, string, string>(maxDataBlockItemCount);
-            var input = new DataItem<string, string, string> { ID = "1", Key = "2", Value = "3" };
+            Host<string, string, string> host = new Host<string, string, string>(2, 2);
+            var input = new StringStringStringItem { ID = "1", Key = "2", Value = "3" };
             host.Insert(input);
-            host.Insert(new DataItem<string, string, string> { ID = "2", Key = "1", Value = "3" });
-            host.Insert(new DataItem<string, string, string> { ID = "3", Key = "2", Value = "1" });
+            host.Insert(new StringStringStringItem { ID = "2", Key = "1", Value = "3" });
+            host.Insert(new StringStringStringItem { ID = "3", Key = "2", Value = "1" });
 
             foreach (var db in host.DataBases)
             {

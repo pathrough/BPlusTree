@@ -43,6 +43,7 @@
     <Compile Include="DataItem.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DataItems\StringStringStringItem.cs" />
     <Compile Include="DataUtility.cs">
       <SubType>Code</SubType>
     </Compile>

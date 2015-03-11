@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,9 +12,14 @@ namespace BPlusTree
         where K : IComparable<K>, IEquatable<K>
         where V : IComparable<V>, IEquatable<V>
     {
-        public DataBase(int maxDataBlockItemCount)
+        public DataBase(int maxDataBlockItemCount,int maxIndexBlockItemCount)
         {
             _MaxDataBlockItemCount = maxDataBlockItemCount;
+            _MaxIndexBlockItemCount = maxIndexBlockItemCount;
+            _IndexPath = "index";
+            _DataPath = "data";
+            _IndexBlockSize = 128;
+            _DataBlockSize = 128;
         }
         readonly int _MaxDataBlockItemCount;
         public int MaxDataBlockItemCount
@@ -23,14 +29,62 @@ namespace BPlusTree
                 return _MaxDataBlockItemCount;
             }
         }
-        private List<IndexItem<O, K, V>> _IndexItemList = new List<IndexItem<O, K, V>>();
+        readonly int _MaxIndexBlockItemCount;
+        public int MaxIndexBlockItemCount
+        {
+            get
+            {
+                return _MaxIndexBlockItemCount;
+            }
+        }
+        private List<IndexItem<O, K, V>> _IndexItemList;
         public List<IndexItem<O, K, V>> IndexItemList
         {
-            get { return _IndexItemList; }
-            set { _IndexItemList = value; }
+            get 
+            {
+                _IndexItemList = new List<IndexItem<O, K, V>>();
+                foreach(var item in this.IndexBlockList)
+                {
+                    _IndexItemList.AddRange(item.IndexItemList);
+                }
+                return _IndexItemList; 
+            }
         }
 
-        
+        List<IndexBlock<O, K, V>> _IndexBlockList=new List<IndexBlock<O,K,V>>();
+
+        /// <summary>
+        /// 实际上无法初始化全部的块list，一般用next
+        /// </summary>
+        public List<IndexBlock<O, K, V>> IndexBlockList
+        {
+            get 
+            {
+                _IndexBlockList = new List<IndexBlock<O, K, V>>();
+                //从文件读取数据
+                using (FileStream fs = new FileStream(this.IndexPath, FileMode.OpenOrCreate, FileAccess.Read))
+                {
+                    //todo:块大小IndexBlockList
+                    //读一块数据
+                }
+                return _IndexBlockList; 
+            }
+        }
+
+        readonly IndexBlock<O, K, V> _RootIndexBlock;
+
+        /// <summary>
+        /// 根索引块,数据访问的入口
+        /// </summary>
+        public IndexBlock<O, K, V> RootIndexBlock
+        {
+            get 
+            {
+                //todo:从文件中读取数据初始化，根索引块，所有数据查询都是从这里开始的
+                return _RootIndexBlock; 
+            }
+        } 
+
 
         public int DataItemCount
         {
@@ -58,6 +112,7 @@ namespace BPlusTree
             IndexItem<O, K, V> indexItem = GetIndexItem(dataItem);
             if (indexItem != null)
             {
+                //数据块有数据
                 if (indexItem.DataItem.Equals(dataItem))
                 {
                     return InsertResult.Repeate;//重复的不插入
@@ -67,13 +122,14 @@ namespace BPlusTree
                    
                     if (indexItem.DataBlock.DataItemList.Count < indexItem.DataBlock.MaxItemCount)
                     {
+                        //数据块没满
                         indexItem.DataBlock.DataItemList.Add(dataItem);
                         indexItem.DataBlock.DataItemList = Order(indexItem.DataBlock.DataItemList);//重新排序 todo
                         indexItem.DataItem = indexItem.DataBlock.DataItemList.Last();
                     }
                     else
                     {
-                        //分裂
+                        //数据块已经满，分裂数据块
                         indexItem.DataBlock.DataItemList.Add(dataItem);
                         indexItem.DataBlock.DataItemList = Order(indexItem.DataBlock.DataItemList);//重新排序 todo
 
@@ -86,30 +142,110 @@ namespace BPlusTree
                         indexItem.DataBlock.DataItemList = part1;
                         indexItem.DataItem = part1.Last();
 
-                        //新增的                    
-                        IndexItemList.Add(
-                            new IndexItem<O, K, V>(this
-                                , new DataBlock<O, K, V>(this, part2)
-                                , part2.Last()
-                            )
-                        );
+                        //新建索引
+                        IndexBlock<O, K, V> indexBlock;
+                       
+                        if(indexItem.IndexBlock.IndexItemList.Count==this.MaxIndexBlockItemCount)
+                        {
+                            //索引块已满，新增索引块
+                            indexBlock = new IndexBlock<O, K, V>(this
+                                , new List<IndexItem<O, K, V>>()
+                                , indexItem.IndexBlock.Position + 1);
+                            this.IndexBlockList.Add(indexBlock);
+                        }
+                        else
+                        {
+                            //索引块没满，获取当前索引块
+                            indexBlock = indexItem.IndexBlock;
+                            ////保证索引是排序的
+                            //this.IndexItemList = Order(IndexItemList);
+                        }
 
-                        //保证索引是排序的
-                        this.IndexItemList = Order(IndexItemList);
+                        //新建数据块
+                        var dataBlock = new DataBlock<O, K, V>(this
+                            , part2
+                            , indexItem.DataBlock.Position + 1);
+
+                        var dataItemForIndex = Order(part2).Last();
+                        //新建索引
+                        var newIndexItem = new IndexItem<O, K, V>(this, dataBlock, dataItemForIndex, indexBlock);
+                        indexBlock.IndexItemList.Add(newIndexItem);
+
+                        //保存
+                        WriteIndex(indexBlock);
+                        WriteData(newIndexItem.DataBlock);
                     }
                 }
             }
             else
-            {
-               
-                IndexItemList.Add(
-                    new IndexItem<O, K, V>(this
-                        , new DataBlock<O, K, V>(this, new List<DataItem<O, K, V>> { dataItem })
-                        , dataItem
-                    )
-                );
+            {//数据库没有数据                
+
+                //新建数据块
+                var newDataBlock = new DataBlock<O, K, V>(this, new List<DataItem<O, K, V>> { dataItem }, 0);
+
+                //新建索引块
+                var newIndexBlock = new IndexBlock<O, K, V>(this,new List<IndexItem<O,K,V>>(),0);
+                
+                //新建索引
+                indexItem = new IndexItem<O, K, V>(this,newDataBlock,dataItem,newIndexBlock);
+
+                //指定关系
+                this.IndexBlockList.Add(newIndexBlock);
+                newIndexBlock.IndexItemList.Add(indexItem);
+
+                //持久化
+                WriteIndex(newIndexBlock);
+                WriteData(newDataBlock);
             }
             return InsertResult.Success;
+        }
+
+        readonly string _IndexPath;
+
+        public string IndexPath
+        {
+            get { return _IndexPath; }
+        }
+
+        readonly int _IndexBlockSize;
+
+        public int IndexBlockSize
+        {
+            get { return _IndexBlockSize; }
+        }
+
+        readonly int _DataBlockSize;
+        public int DataBlockSize
+        {
+            get { return _DataBlockSize; }
+        } 
+
+
+        readonly string _DataPath;
+
+        public string DataPath
+        {
+            get { return _DataPath; }
+        }
+
+        void WriteData(DataBlock<O, K, V> block)
+        {
+            byte[] bs = block.ToBytes();
+            using (FileStream fs = new FileStream(this.DataPath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+            {
+                fs.Seek(block.Position, SeekOrigin.Begin);
+                fs.Write(bs, 0, bs.Length);
+            }
+        }
+
+        void WriteIndex(IndexBlock<O, K, V> block)
+        {
+            byte[] bs = block.ToBytes();
+            using (FileStream fs = new FileStream(this.IndexPath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+            {
+                fs.Seek(block.Position, SeekOrigin.Begin);
+                fs.Write(bs, 0, bs.Length);
+            }
         }
 
         /// <summary>
@@ -126,7 +262,7 @@ namespace BPlusTree
             }
             else
             {
-                DataItem<O, K, V> targetDataItem = null;
+                DataItem<O, K, V> targetDataItem = null;//find the target to delete
                 foreach (var item in targetIndexItem.DataBlock.DataItemList)
                 {
                     if (item.Equals(dataItem))
@@ -137,7 +273,8 @@ namespace BPlusTree
                 }
                 if (targetDataItem != null)
                 {
-                   
+                    DataBlock<O,K,V> targetDataBlock = targetIndexItem.DataBlock;
+                    IndexBlock<O, K, V> targetIndexBlock = targetIndexItem.IndexBlock;
                     var sourceDataItemList = targetIndexItem.DataBlock.DataItemList;
                     //删除操作
                     var afterDelDataItemList = sourceDataItemList.Where(d => d.Equals(dataItem) == false).ToList();
@@ -156,8 +293,10 @@ namespace BPlusTree
                     else
                     {
                         //删除后，数据页已经没有数据了，索引项也应该删掉
-                        this.IndexItemList.Remove(targetIndexItem);
+                        targetIndexBlock.IndexItemList.Remove(targetIndexItem);
                     }
+                    WriteIndex(targetIndexBlock);
+                    WriteData(targetDataBlock);
                 }
                 else
                 {

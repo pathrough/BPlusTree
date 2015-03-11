@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BPlusTree
 {
-    public class DataItem<O, K, V> : IEquatable<DataItem<O, K, V>>
+    public abstract class DataItem<O, K, V> : IEquatable<DataItem<O, K, V>>
         where O : IComparable<O>
         where K : IComparable<K>
         where V : IComparable<V>
@@ -22,6 +22,8 @@ namespace BPlusTree
         {
             return this.ID.Equals(other.ID) && this.Key.Equals(other.Key) && this.Value.Equals(other.Value);
         }
+
+        public abstract byte[] ToBytes();
     }
 
     public enum OperationType
@@ -49,10 +51,11 @@ namespace BPlusTree
         where K : IComparable<K>, IEquatable<K>
         where V : IComparable<V>, IEquatable<V>
     {
-        public DataBlock(DataBase<O, K, V> dataBase, List<DataItem<O, K, V>> dataItemList)
+        public DataBlock(DataBase<O, K, V> dataBase, List<DataItem<O, K, V>> dataItemList,long position)
         {
             this._DataBase = dataBase;
             _DataItemList = dataItemList;
+            _Position = position;
         }
         private List<DataItem<O, K, V>> _DataItemList = new List<DataItem<O, K, V>>();
         public List<DataItem<O, K, V>> DataItemList
@@ -84,6 +87,25 @@ namespace BPlusTree
             {
                 return this.DataItemList.Count;
             }
+        }
+
+        long _Position;
+        public long Position
+        {
+            get
+            {
+                return _Position;
+            }
+        }
+
+        public byte[] ToBytes()
+        {
+            List<byte> bsList = new List<byte>();
+            foreach (var data in DataItemList)
+            {
+                bsList.AddRange(data.ToBytes());
+            }
+            return bsList.ToArray();
         }
     }
     

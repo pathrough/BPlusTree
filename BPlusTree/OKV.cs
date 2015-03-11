@@ -11,7 +11,7 @@ namespace BPlusTree
         where K : IComparable<K>, IEquatable<K>
         where V : IComparable<V>, IEquatable<V>
     {
-        public OKV(int maxDataBlockItemCount) : base(maxDataBlockItemCount) { }
+        public OKV(int maxDataBlockItemCount, int maxIndexBlockItemCount) : base(maxDataBlockItemCount, maxIndexBlockItemCount) { }
         /// <summary>
         /// 获取指定的DataItem可能归属的IndexItem
         /// </summary>

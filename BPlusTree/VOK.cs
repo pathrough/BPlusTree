@@ -11,7 +11,7 @@ namespace BPlusTree
         where K : IComparable<K>, IEquatable<K>
         where V : IComparable<V>, IEquatable<V>
     {
-        public VOK(int maxDataBlockItemCount) : base(maxDataBlockItemCount) { }
+        public VOK(int maxDataBlockItemCount, int maxIndexBlockItemCount) : base(maxDataBlockItemCount, maxIndexBlockItemCount) { }
         protected override IndexItem<O, K, V> GetIndexItem(DataItem<O, K, V> dataItem)
         {
             if (IndexItemList != null && IndexItemList.Count > 0)
