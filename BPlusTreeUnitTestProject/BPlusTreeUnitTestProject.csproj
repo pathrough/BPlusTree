@@ -50,10 +50,6 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="HostTest\Host_Insert_Test.cs" />
-    <Compile Include="KVOTest\Insert_Test.cs" />
-    <Compile Include="OKVTest\Delete_Test.cs" />
-    <Compile Include="OKVTest\Insert_Test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VOKTest\Insert_Test.cs" />
   </ItemGroup>
@@ -62,6 +58,11 @@
       <Project>{a822caf2-7130-4000-8530-6dc0b48cc37d}</Project>
       <Name>BPlusTree</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="HostTest\" />
+    <Folder Include="KVOTest\" />
+    <Folder Include="OKVTest\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
