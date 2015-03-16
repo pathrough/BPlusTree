@@ -11,7 +11,7 @@ namespace BPlusTree
         where K : IComparable<K>, IEquatable<K>
         where V : IComparable<V>, IEquatable<V>
     {
-        public VOK(int maxDataBlockItemCount, int maxIndexBlockItemCount) : base(maxDataBlockItemCount, maxIndexBlockItemCount) { }
+        public VOK(int maxDataBlockItemCount, int maxIndexBlockItemCount, Host<O, K, V> host) : base(maxDataBlockItemCount, maxIndexBlockItemCount, host) { }
         protected override IndexItem<O, K, V> GetIndexItem(DataItem<O, K, V> dataItem)
         {
             if (IndexItemList != null && IndexItemList.Count > 0)
@@ -79,5 +79,6 @@ namespace BPlusTree
         {
             return list.OrderBy(d => d.Value).ThenBy(d => d.ID).ThenBy(d => d.Key).ToList();
         }
+      
     }
 }

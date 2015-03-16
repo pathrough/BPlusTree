@@ -24,6 +24,7 @@ namespace BPlusTree
         }
 
         public abstract byte[] ToBytes();
+        //public abstract DataItem<O, K, V> ToDataItem(byte[] bs);
     }
 
     public enum OperationType

@@ -11,7 +11,7 @@ namespace BPlusTree
         where K : IComparable<K>, IEquatable<K>
         where V : IComparable<V>, IEquatable<V>
     {
-        public OKV(int maxDataBlockItemCount, int maxIndexBlockItemCount) : base(maxDataBlockItemCount, maxIndexBlockItemCount) { }
+        public OKV(int maxDataBlockItemCount, int maxIndexBlockItemCount, Host<O, K, V> host) : base(maxDataBlockItemCount, maxIndexBlockItemCount, host) { }
         /// <summary>
         /// 获取指定的DataItem可能归属的IndexItem
         /// </summary>
@@ -87,5 +87,7 @@ namespace BPlusTree
         {
             return list.OrderBy(d => d.ID).ThenBy(d => d.Key).ThenBy(d => d.Value).ToList();
         }
+
+       
     }
 }

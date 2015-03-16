@@ -43,7 +43,19 @@
     <Compile Include="DataItem.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataItems\StringStringStringItem.cs" />
+    <Compile Include="IndexBlock.cs" />
+    <Compile Include="DataItems\StringStringStringDataItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataItems\StringStringStringHost.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataItems\StringStringStringIndexBlock.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataItems\StringStringStringIndexItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DataUtility.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace BPlusTree
 {
 
-    public class Host<O, K, V>
+    public abstract class Host<O, K, V>
         where O : IComparable<O>, IEquatable<O>
         where K : IComparable<K>, IEquatable<K>
         where V : IComparable<V>, IEquatable<V>
@@ -21,10 +21,14 @@ namespace BPlusTree
         public Host(int maxDataBlockItemCount, int maxIndexBlockItemCount)
         {
             RollBackWhenStart();//回滚意外关机的导致事务未完成的工作，也许也可以根据日志自动完成事务
-            //DataBases.Add(new OKV(maxDataBlockItemCount));
-            DataBases.Add(new KVO<O, K, V>(maxDataBlockItemCount, maxIndexBlockItemCount));
-            //DataBases.Add(new VOK(maxDataBlockItemCount));
+            DataBases.Add(new OKV<O, K, V>(maxDataBlockItemCount, maxIndexBlockItemCount,this));
+            DataBases.Add(new KVO<O, K, V>(maxDataBlockItemCount, maxIndexBlockItemCount, this));
+            DataBases.Add(new VOK<O, K, V>(maxDataBlockItemCount, maxIndexBlockItemCount, this));
         }
+
+        //protected abstract OKV<O, K, V> CreateOKV(int maxDataBlockItemCount, int maxIndexBlockItemCount);
+        //protected abstract KVO<O, K, V> CreateKVO(int maxDataBlockItemCount, int maxIndexBlockItemCount);
+        //protected abstract VOK<O, K, V> CreateVOK(int maxDataBlockItemCount, int maxIndexBlockItemCount);
 
         List<DataItemLog<O, K, V>> _LogList = new List<DataItemLog<O, K, V>>();
         /// <summary>
@@ -132,5 +136,9 @@ namespace BPlusTree
                 }
             }
         }
+
+        public abstract IndexBlock<O, K, V> CreateIndexBlock(DataBase<O, K, V> dataBase,List<IndexItem<O, K, V>> indexItemList);
+
+        public abstract IndexItem<O, K, V> CreateIndexItem(DataBase<O, K, V> dataBase, DataBlock<O, K, V> dataBlock, DataItem<O, K, V> dataItem, IndexBlock<O, K, V> indexBlock);
     }
 }

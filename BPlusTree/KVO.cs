@@ -11,7 +11,7 @@ namespace BPlusTree
         where K : IComparable<K>, IEquatable<K>
         where V : IComparable<V>, IEquatable<V>
     {
-        public KVO(int maxDataBlockItemCount, int maxIndexBlockItemCount) : base(maxDataBlockItemCount, maxIndexBlockItemCount) { }
+        public KVO(int maxDataBlockItemCount, int maxIndexBlockItemCount, Host<O, K, V> host) : base(maxDataBlockItemCount, maxIndexBlockItemCount, host) { }
         protected override IndexItem<O, K, V> GetIndexItem(DataItem<O, K, V> dataItem)
         {
             if (IndexItemList != null && IndexItemList.Count > 0)
@@ -81,6 +81,8 @@ namespace BPlusTree
         protected override List<DataItem<O, K, V>> Order(List<DataItem<O, K, V>> list)
         {
             return list.OrderBy(d => d.Key).ThenBy(d => d.Value).ThenBy(d => d.ID).ToList();
-        }            
+        }
+
+      
     }
 }

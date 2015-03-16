@@ -1,16 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace BPlusTree
 {
-    public class IndexItem<O, K, V>
+    public abstract class IndexItem<O, K, V>
         where O : IComparable<O>, IEquatable<O>
         where K : IComparable<K>, IEquatable<K>
         where V : IComparable<V>, IEquatable<V>
     {
+        //DataItem长度
+
+        //DataItem
+
+        //DataBlock位置
+        //
         public IndexItem(DataBase<O, K, V> dataBase, DataBlock<O, K, V> dataBlock, DataItem<O, K, V> dataItem, IndexBlock<O, K, V> indexBlock)
         {
             _DataBase = dataBase;
@@ -18,6 +25,23 @@ namespace BPlusTree
             _DataItem = dataItem;
             _IndexBlock = indexBlock;
         }
+
+        public IndexItem(byte[] bsIndexItem) 
+        {
+            int index = 0;
+            //DataItem长度
+            byte[] bsLen = bsIndexItem.GetSubArray(ref index, 4);
+            int len = bsLen.ToInt32();
+
+            //DataItem
+            byte[] bsDataItem = bsIndexItem.GetSubArray(ref index, len);
+            this._DataItem = ToDataItem(bsDataItem);
+
+            //DataBlock位置
+            byte[] bsDataBlockPosition = bsIndexItem.GetSubArray(ref index, 8);
+        }
+
+        protected abstract DataItem<O, K, V> ToDataItem(byte[] bs);
 
         readonly DataBase<O, K, V> _DataBase;
         public DataBase<O, K, V> DataBase
@@ -78,84 +102,10 @@ namespace BPlusTree
         {
             List<byte> bsList = new List<byte>();
             bsList.AddRange(this.DataBlock.Position.ToBytes());
-            bsList.AddRange(this.DataItem.ToBytes());
-            return new byte[0];
+            bsList.AddRange(this.DataItem.ToBytes());            
+            return bsList.ToArray();
         }
     }
 
-    public class IndexBlock<O,K,V>
-        where O : IComparable<O>, IEquatable<O>
-        where K : IComparable<K>, IEquatable<K>
-        where V : IComparable<V>, IEquatable<V>
-    {
-        public IndexBlock(DataBase<O, K, V> dataBase, List<IndexItem<O, K, V>> indexItemList,long position)
-        {
-            this._DataBase = dataBase;
-            _IndexItemList = indexItemList;
-            _Position = position;
-        }
-
-        IndexBlock<O, K, V> _Next;
-
-        public IndexBlock<O, K, V> Next
-        {
-            get 
-            {
-                //todo:Next IndexBlock
-                return _Next; 
-            }
-        }
-
-        private List<IndexItem<O, K, V>> _IndexItemList = new List<IndexItem<O, K, V>>();
-        public List<IndexItem<O, K, V>> IndexItemList
-        {
-            get { return _IndexItemList; }
-            set { _IndexItemList = value; }
-        }
-
-        public int MaxItemCount
-        {
-            get
-            {
-                return this.DataBase.MaxIndexBlockItemCount;
-            }
-        }
-
-        readonly DataBase<O, K, V> _DataBase;
-        public DataBase<O, K, V> DataBase
-        {
-            get
-            {
-                return _DataBase;
-            }
-        }
-
-        public int Count
-        {
-            get
-            {
-                return this.IndexItemList.Count;
-            }
-        }
-
-        long _Position;
-        public long Position
-        {
-            get
-            {
-                return _Position;
-            }
-        }
-
-        public byte[] ToBytes()
-        {
-            List<byte> bsList = new List<byte>();
-            
-            foreach(var index in this.IndexItemList)
-            {
-                bsList.AddRange(index.ToBytes());
-            }
-            return new byte[0];
-        }
-    }
+   
 }

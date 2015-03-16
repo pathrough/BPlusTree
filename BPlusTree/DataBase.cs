@@ -12,7 +12,7 @@ namespace BPlusTree
         where K : IComparable<K>, IEquatable<K>
         where V : IComparable<V>, IEquatable<V>
     {
-        public DataBase(int maxDataBlockItemCount,int maxIndexBlockItemCount)
+        public DataBase(int maxDataBlockItemCount,int maxIndexBlockItemCount,Host<O,K,V> host)
         {
             _MaxDataBlockItemCount = maxDataBlockItemCount;
             _MaxIndexBlockItemCount = maxIndexBlockItemCount;
@@ -20,7 +20,17 @@ namespace BPlusTree
             _DataPath = "data";
             _IndexBlockSize = 128;
             _DataBlockSize = 128;
+            _Host = host;
         }
+
+        readonly Host<O, K, V> _Host;
+
+        public Host<O, K, V> Host
+        {
+            get { return _Host; }
+        } 
+
+
         readonly int _MaxDataBlockItemCount;
         public int MaxDataBlockItemCount
         {
@@ -60,13 +70,17 @@ namespace BPlusTree
         {
             get 
             {
-                _IndexBlockList = new List<IndexBlock<O, K, V>>();
-                //从文件读取数据
-                using (FileStream fs = new FileStream(this.IndexPath, FileMode.OpenOrCreate, FileAccess.Read))
-                {
-                    //todo:块大小IndexBlockList
-                    //读一块数据
-                }
+                //_IndexBlockList = new List<IndexBlock<O, K, V>>();
+                ////从文件读取数据
+                //using (FileStream fs = new FileStream(this.IndexPath, FileMode.OpenOrCreate, FileAccess.Read))
+                //{
+                //    //todo:块大小IndexBlockList
+                //    //读一块数据
+                //}
+
+                //第一个块的大小
+                //索引块和下一个块的大小
+               //读下一个块
                 return _IndexBlockList; 
             }
         }
@@ -148,9 +162,7 @@ namespace BPlusTree
                         if(indexItem.IndexBlock.IndexItemList.Count==this.MaxIndexBlockItemCount)
                         {
                             //索引块已满，新增索引块
-                            indexBlock = new IndexBlock<O, K, V>(this
-                                , new List<IndexItem<O, K, V>>()
-                                , indexItem.IndexBlock.Position + 1);
+                            indexBlock = CreateIndexBlock( new List<IndexItem<O, K, V>>());
                             this.IndexBlockList.Add(indexBlock);
                         }
                         else
@@ -168,7 +180,7 @@ namespace BPlusTree
 
                         var dataItemForIndex = Order(part2).Last();
                         //新建索引
-                        var newIndexItem = new IndexItem<O, K, V>(this, dataBlock, dataItemForIndex, indexBlock);
+                        var newIndexItem = CreateIndexItem(dataBlock, dataItemForIndex, indexBlock);
                         indexBlock.IndexItemList.Add(newIndexItem);
 
                         //保存
@@ -184,10 +196,10 @@ namespace BPlusTree
                 var newDataBlock = new DataBlock<O, K, V>(this, new List<DataItem<O, K, V>> { dataItem }, 0);
 
                 //新建索引块
-                var newIndexBlock = new IndexBlock<O, K, V>(this,new List<IndexItem<O,K,V>>(),0);
+                var newIndexBlock = CreateIndexBlock( new List<IndexItem<O, K, V>>());
                 
                 //新建索引
-                indexItem = new IndexItem<O, K, V>(this,newDataBlock,dataItem,newIndexBlock);
+                indexItem = CreateIndexItem(newDataBlock, dataItem, newIndexBlock);
 
                 //指定关系
                 this.IndexBlockList.Add(newIndexBlock);
@@ -324,6 +336,16 @@ namespace BPlusTree
 
         protected abstract List<IndexItem<O, K, V>> Order(List<IndexItem<O, K, V>> list);
         protected abstract List<DataItem<O, K, V>> Order(List<DataItem<O, K, V>> list);
+
+        public IndexBlock<O, K, V> CreateIndexBlock(List<IndexItem<O, K, V>> indexItemList)
+        {
+            return this.Host.CreateIndexBlock(this,indexItemList);
+        }
+
+        public IndexItem<O, K, V> CreateIndexItem(DataBlock<O, K, V> dataBlock, DataItem<O, K, V> dataItem, IndexBlock<O, K, V> indexBlock)
+        {
+            return Host.CreateIndexItem(this, dataBlock, dataItem, indexBlock);
+        }
     }
 
     public enum InsertResult
