@@ -14,13 +14,13 @@ namespace BPlusTreeUnitTestProject.VOKTest
             int maxDataBlockItemCount = 2;
             DataBase<string, string, string> db = new VOK<string, string, string>(2,2,new StringStringStringHost(2,2));
 
-            var input1 = new StringStringStringDataItem { ID = "1", Key = "2", Value = "3" };
+            var input1 = new StringStringStringDataItem("1","2","3") ;
             db.Insert(input1);
 
-            var input2 = new StringStringStringDataItem { ID = "2", Key = "1", Value = "3" };
+            var input2 = new StringStringStringDataItem("2","1","3") ;
             db.Insert(input2);
 
-            var input3 = new StringStringStringDataItem { ID = "3", Key = "2", Value = "1" };
+            var input3 = new StringStringStringDataItem("3","2","1") ;
             db.Insert(input3);
 
             Assert.IsTrue(db.DataItemList[0].Equals(input3));

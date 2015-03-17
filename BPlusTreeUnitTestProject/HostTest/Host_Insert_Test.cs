@@ -13,7 +13,7 @@ namespace BPlusTreeUnitTestProject.HostTest
         {
             int maxDataBlockItemCount = 2;
             Host<string, string, string> host = new Host<string, string, string>(2,2);
-            var input = new StringStringStringItem { ID = "1", Key = "2", Value = "3" };
+            var input = new StringStringStringDataItem { ID = "1", Key = "2", Value = "3" };
              host.Insert(input);
            
              foreach (var db in host.DataBases)
@@ -30,10 +30,10 @@ namespace BPlusTreeUnitTestProject.HostTest
         {
             int maxDataBlockItemCount = 2;
             Host<string, string, string> host = new Host<string, string, string>(2, 2);
-            var input = new StringStringStringItem { ID = "1", Key = "2", Value = "3" };
+            var input = new StringStringStringDataItem { ID = "1", Key = "2", Value = "3" };
             host.Insert(input);
-            host.Insert(new StringStringStringItem { ID = "2", Key = "1", Value = "3" });
-            host.Insert(new StringStringStringItem { ID = "3", Key = "2", Value = "1" });
+            host.Insert(new StringStringStringDataItem { ID = "2", Key = "1", Value = "3" });
+            host.Insert(new StringStringStringDataItem { ID = "3", Key = "2", Value = "1" });
 
             foreach (var db in host.DataBases)
             {

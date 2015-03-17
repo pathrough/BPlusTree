@@ -17,9 +17,16 @@ namespace BPlusTree.DataItems
             return new StringStringStringIndexBlock(dataBase, indexItemList);
         }
 
+        public override IndexBlock<string, string, string> CreateIndexBlock(long position, DataBase<string, string, string> dataBase)
+        {
+            return new StringStringStringIndexBlock(position,dataBase);
+        }
+
         public override IndexItem<string, string, string> CreateIndexItem(DataBase<string, string, string> dataBase, DataBlock<string, string, string> dataBlock, DataItem<string, string, string> dataItem, IndexBlock<string, string, string> indexBlock)
         {
             return new StringStringStringIndexItem(dataBase, dataBlock, dataItem, indexBlock);
         }
+
+        
     }
 }

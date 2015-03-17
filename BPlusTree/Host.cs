@@ -139,6 +139,8 @@ namespace BPlusTree
 
         public abstract IndexBlock<O, K, V> CreateIndexBlock(DataBase<O, K, V> dataBase,List<IndexItem<O, K, V>> indexItemList);
 
+        public abstract IndexBlock<O, K, V> CreateIndexBlock(long position, DataBase<O, K, V> dataBase);
+
         public abstract IndexItem<O, K, V> CreateIndexItem(DataBase<O, K, V> dataBase, DataBlock<O, K, V> dataBlock, DataItem<O, K, V> dataItem, IndexBlock<O, K, V> indexBlock);
     }
 }

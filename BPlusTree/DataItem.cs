@@ -10,10 +10,22 @@ namespace BPlusTree
         where O : IComparable<O>
         where K : IComparable<K>
         where V : IComparable<V>
-        //where O : IEquatable<O>
-        //where K : IEquatable<K>
-        //where V : IEquatable<V>
+    //where O : IEquatable<O>
+    //where K : IEquatable<K>
+    //where V : IEquatable<V>
     {
+        public DataItem(O id, K key, V value)
+        {
+            this.ID = id;
+            this.Key = key;
+            this.Value = value;
+        }
+
+        public DataItem(byte[] bs)
+        {
+            InitDataItem(bs);
+        }
+
         public O ID { get; set; }
         public K Key { get; set; }
         public V Value { get; set; }
@@ -24,7 +36,7 @@ namespace BPlusTree
         }
 
         public abstract byte[] ToBytes();
-        //public abstract DataItem<O, K, V> ToDataItem(byte[] bs);
+        protected abstract void InitDataItem(byte[] bs);
     }
 
     public enum OperationType
@@ -52,7 +64,7 @@ namespace BPlusTree
         where K : IComparable<K>, IEquatable<K>
         where V : IComparable<V>, IEquatable<V>
     {
-        public DataBlock(DataBase<O, K, V> dataBase, List<DataItem<O, K, V>> dataItemList,long position)
+        public DataBlock(DataBase<O, K, V> dataBase, List<DataItem<O, K, V>> dataItemList, long position)
         {
             this._DataBase = dataBase;
             _DataItemList = dataItemList;
@@ -109,5 +121,5 @@ namespace BPlusTree
             return bsList.ToArray();
         }
     }
-    
+
 }

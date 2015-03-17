@@ -12,6 +12,9 @@ namespace BPlusTree.DataItems
             : base(dataBase, indexItemList)
         {
         }
+        public StringStringStringIndexBlock(long position, DataBase<string, string, string> dataBase):base(position,dataBase)
+        {
+        }
         protected override IndexItem<string, string, string> CreateIndexItem(byte[] bs)
         {
             return new StringStringStringIndexItem(bs);

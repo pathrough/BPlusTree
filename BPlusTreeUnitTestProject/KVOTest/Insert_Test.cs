@@ -12,7 +12,7 @@ namespace BPlusTreeUnitTestProject.KVOTest
         {
             int maxDataBlockItemCount = 2;
             DataBase<string, string, string> db = new KVO<string, string, string>(2,2);
-            var input0 = new StringStringStringItem { ID = "0", Key = "0", Value = "0" };
+            var input0 = new StringStringStringDataItem { ID = "0", Key = "0", Value = "0" };
             db.Insert(input0);
             Assert.IsTrue(db.DataItemList[0].Equals(input0));
         }
@@ -22,9 +22,9 @@ namespace BPlusTreeUnitTestProject.KVOTest
         {
             int maxDataBlockItemCount = 2;
             DataBase<string, string, string> db = new KVO<string, string, string>(2,2);
-            var input0 = new StringStringStringItem { ID = "0", Key = "0", Value = "0" };
+            var input0 = new StringStringStringDataItem { ID = "0", Key = "0", Value = "0" };
             db.Insert(input0);
-            var input1 = new StringStringStringItem { ID = "1", Key = "1", Value = "1" };
+            var input1 = new StringStringStringDataItem { ID = "1", Key = "1", Value = "1" };
             db.Insert(input1);
             Assert.IsTrue(db.DataItemList[0].Equals(input0));
             Assert.IsTrue(db.DataItemList[1].Equals(input1));
@@ -36,10 +36,10 @@ namespace BPlusTreeUnitTestProject.KVOTest
             int maxDataBlockItemCount = 2;
             DataBase<string, string, string> db = new KVO<string, string, string>(2,2);
 
-            var input1 = new StringStringStringItem { ID = "1", Key = "1", Value = "1" };
+            var input1 = new StringStringStringDataItem { ID = "1", Key = "1", Value = "1" };
             db.Insert(input1);
 
-            var input0 = new StringStringStringItem { ID = "0", Key = "0", Value = "0" };
+            var input0 = new StringStringStringDataItem { ID = "0", Key = "0", Value = "0" };
             db.Insert(input0);
 
             Assert.IsTrue(db.DataItemList[0].Equals(input0));
@@ -51,13 +51,13 @@ namespace BPlusTreeUnitTestProject.KVOTest
         {
             int maxDataBlockItemCount = 2;
             DataBase<string, string, string> db = new KVO<string, string, string>(2,2);
-            var input0 = new StringStringStringItem { ID = "0", Key = "0", Value = "0" };
+            var input0 = new StringStringStringDataItem { ID = "0", Key = "0", Value = "0" };
             db.Insert(input0);
 
-            var input1 = new StringStringStringItem { ID = "1", Key = "1", Value = "1" };
+            var input1 = new StringStringStringDataItem { ID = "1", Key = "1", Value = "1" };
             db.Insert(input1);
 
-            var input2 = new StringStringStringItem { ID = "2", Key = "2", Value = "2" };
+            var input2 = new StringStringStringDataItem { ID = "2", Key = "2", Value = "2" };
             db.Insert(input2);
 
             Assert.IsTrue(db.DataItemList[0].Equals(input0));
@@ -72,13 +72,13 @@ namespace BPlusTreeUnitTestProject.KVOTest
             int maxDataBlockItemCount = 2;
             DataBase<string, string, string> db = new KVO<string, string, string>(2,2);
 
-            var input0 = new StringStringStringItem { ID = "0", Key = "0", Value = "0" };
+            var input0 = new StringStringStringDataItem { ID = "0", Key = "0", Value = "0" };
             db.Insert(input0);
 
-            var input2 = new StringStringStringItem { ID = "2", Key = "2", Value = "2" };
+            var input2 = new StringStringStringDataItem { ID = "2", Key = "2", Value = "2" };
             db.Insert(input2);
 
-            var input1 = new StringStringStringItem { ID = "1", Key = "1", Value = "1" };
+            var input1 = new StringStringStringDataItem { ID = "1", Key = "1", Value = "1" };
             db.Insert(input1);
 
             Assert.IsTrue(db.DataItemList[0].Equals(input0));
@@ -92,13 +92,13 @@ namespace BPlusTreeUnitTestProject.KVOTest
             int maxDataBlockItemCount = 2;
             DataBase<string, string, string> db = new KVO<string, string, string>(2,2);
 
-            var input1 = new StringStringStringItem { ID = "1", Key = "1", Value = "1" };
+            var input1 = new StringStringStringDataItem { ID = "1", Key = "1", Value = "1" };
             db.Insert(input1);
 
-            var input0 = new StringStringStringItem { ID = "0", Key = "0", Value = "0" };
+            var input0 = new StringStringStringDataItem { ID = "0", Key = "0", Value = "0" };
             db.Insert(input0);
 
-            var input2 = new StringStringStringItem { ID = "2", Key = "2", Value = "2" };
+            var input2 = new StringStringStringDataItem { ID = "2", Key = "2", Value = "2" };
             db.Insert(input2);
 
             Assert.IsTrue(db.DataItemList[0].Equals(input0));
@@ -112,13 +112,13 @@ namespace BPlusTreeUnitTestProject.KVOTest
             int maxDataBlockItemCount = 2;
             DataBase<string, string, string> db = new KVO<string, string, string>(2,2);
 
-            var input1 = new StringStringStringItem { ID = "1", Key = "1", Value = "1" };
+            var input1 = new StringStringStringDataItem { ID = "1", Key = "1", Value = "1" };
             db.Insert(input1);
 
-            var input2 = new StringStringStringItem { ID = "2", Key = "2", Value = "2" };
+            var input2 = new StringStringStringDataItem { ID = "2", Key = "2", Value = "2" };
             db.Insert(input2);
 
-            var input0 = new StringStringStringItem { ID = "0", Key = "0", Value = "0" };
+            var input0 = new StringStringStringDataItem { ID = "0", Key = "0", Value = "0" };
             db.Insert(input0);
 
             Assert.IsTrue(db.DataItemList[0].Equals(input0));
@@ -132,13 +132,13 @@ namespace BPlusTreeUnitTestProject.KVOTest
             int maxDataBlockItemCount = 2;
             DataBase<string, string, string> db = new KVO<string, string, string>(2,2);
 
-            var input2 = new StringStringStringItem { ID = "2", Key = "2", Value = "2" };
+            var input2 = new StringStringStringDataItem { ID = "2", Key = "2", Value = "2" };
             db.Insert(input2);
 
-            var input0 = new StringStringStringItem { ID = "0", Key = "0", Value = "0" };
+            var input0 = new StringStringStringDataItem { ID = "0", Key = "0", Value = "0" };
             db.Insert(input0);
 
-            var input1 = new StringStringStringItem { ID = "1", Key = "1", Value = "1" };
+            var input1 = new StringStringStringDataItem { ID = "1", Key = "1", Value = "1" };
             db.Insert(input1);
 
             Assert.IsTrue(db.DataItemList[0].Equals(input0));
@@ -152,13 +152,13 @@ namespace BPlusTreeUnitTestProject.KVOTest
             int maxDataBlockItemCount = 2;
             DataBase<string, string, string> db = new KVO<string, string, string>(2,2);
 
-            var input2 = new StringStringStringItem { ID = "2", Key = "2", Value = "2" };
+            var input2 = new StringStringStringDataItem { ID = "2", Key = "2", Value = "2" };
             db.Insert(input2);
 
-            var input1 = new StringStringStringItem { ID = "1", Key = "1", Value = "1" };
+            var input1 = new StringStringStringDataItem { ID = "1", Key = "1", Value = "1" };
             db.Insert(input1);
 
-            var input0 = new StringStringStringItem { ID = "0", Key = "0", Value = "0" };
+            var input0 = new StringStringStringDataItem { ID = "0", Key = "0", Value = "0" };
             db.Insert(input0);
 
             Assert.IsTrue(db.DataItemList[0].Equals(input0));
@@ -171,16 +171,16 @@ namespace BPlusTreeUnitTestProject.KVOTest
         {
             int maxDataBlockItemCount = 2;
             DataBase<string, string, string> db = new KVO<string, string, string>(2,2);
-            var input0 = new StringStringStringItem { ID = "0", Key = "0", Value = "0" };
+            var input0 = new StringStringStringDataItem { ID = "0", Key = "0", Value = "0" };
             db.Insert(input0);
 
-            var input1 = new StringStringStringItem { ID = "1", Key = "1", Value = "1" };
+            var input1 = new StringStringStringDataItem { ID = "1", Key = "1", Value = "1" };
             db.Insert(input1);
 
-            var input2 = new StringStringStringItem { ID = "2", Key = "2", Value = "2" };
+            var input2 = new StringStringStringDataItem { ID = "2", Key = "2", Value = "2" };
             db.Insert(input2);
 
-            var input3 = new StringStringStringItem { ID = "3", Key = "3", Value = "3" };
+            var input3 = new StringStringStringDataItem { ID = "3", Key = "3", Value = "3" };
             db.Insert(input3);
 
             Assert.IsTrue(db.DataItemList[0].Equals(input0));
@@ -195,16 +195,16 @@ namespace BPlusTreeUnitTestProject.KVOTest
             int maxDataBlockItemCount = 2;
             DataBase<string, string, string> db = new KVO<string, string, string>(2,2);
 
-            var input0 = new StringStringStringItem { ID = "0", Key = "0", Value = "0" };
+            var input0 = new StringStringStringDataItem { ID = "0", Key = "0", Value = "0" };
             db.Insert(input0);
 
-            var input1 = new StringStringStringItem { ID = "1", Key = "1", Value = "1" };
+            var input1 = new StringStringStringDataItem { ID = "1", Key = "1", Value = "1" };
             db.Insert(input1);
 
-            var input3 = new StringStringStringItem { ID = "3", Key = "3", Value = "3" };
+            var input3 = new StringStringStringDataItem { ID = "3", Key = "3", Value = "3" };
             db.Insert(input3);
 
-            var input2 = new StringStringStringItem { ID = "2", Key = "2", Value = "2" };
+            var input2 = new StringStringStringDataItem { ID = "2", Key = "2", Value = "2" };
             db.Insert(input2);
 
             Assert.IsTrue(db.DataItemList[0].Equals(input0));
@@ -220,16 +220,16 @@ namespace BPlusTreeUnitTestProject.KVOTest
             int maxDataBlockItemCount = 2;
             DataBase<string, string, string> db = new KVO<string, string, string>(2,2);
 
-            var input0 = new StringStringStringItem { ID = "0", Key = "0", Value = "0" };
+            var input0 = new StringStringStringDataItem { ID = "0", Key = "0", Value = "0" };
             db.Insert(input0);
 
-            var input2 = new StringStringStringItem { ID = "2", Key = "2", Value = "2" };
+            var input2 = new StringStringStringDataItem { ID = "2", Key = "2", Value = "2" };
             db.Insert(input2);
 
-            var input1 = new StringStringStringItem { ID = "1", Key = "1", Value = "1" };
+            var input1 = new StringStringStringDataItem { ID = "1", Key = "1", Value = "1" };
             db.Insert(input1);
 
-            var input3 = new StringStringStringItem { ID = "3", Key = "3", Value = "3" };
+            var input3 = new StringStringStringDataItem { ID = "3", Key = "3", Value = "3" };
             db.Insert(input3);
 
 
@@ -245,16 +245,16 @@ namespace BPlusTreeUnitTestProject.KVOTest
             int maxDataBlockItemCount = 2;
             DataBase<string, string, string> db = new KVO<string, string, string>(2,2);
 
-            var input0 = new StringStringStringItem { ID = "0", Key = "0", Value = "0" };
+            var input0 = new StringStringStringDataItem { ID = "0", Key = "0", Value = "0" };
             db.Insert(input0);
 
-            var input2 = new StringStringStringItem { ID = "2", Key = "2", Value = "2" };
+            var input2 = new StringStringStringDataItem { ID = "2", Key = "2", Value = "2" };
             db.Insert(input2);
 
-            var input3 = new StringStringStringItem { ID = "3", Key = "3", Value = "3" };
+            var input3 = new StringStringStringDataItem { ID = "3", Key = "3", Value = "3" };
             db.Insert(input3);
 
-            var input1 = new StringStringStringItem { ID = "1", Key = "1", Value = "1" };
+            var input1 = new StringStringStringDataItem { ID = "1", Key = "1", Value = "1" };
             db.Insert(input1);
 
             Assert.IsTrue(db.DataItemList[0].Equals(input0));
@@ -269,13 +269,13 @@ namespace BPlusTreeUnitTestProject.KVOTest
             int maxDataBlockItemCount = 2;
             DataBase<string, string, string> db = new KVO<string, string, string>(2,2);
 
-            var input0 = new StringStringStringItem { ID = "0", Key = "0", Value = "0" };
+            var input0 = new StringStringStringDataItem { ID = "0", Key = "0", Value = "0" };
             db.Insert(input0);
-            var input3 = new StringStringStringItem { ID = "3", Key = "3", Value = "3" };
+            var input3 = new StringStringStringDataItem { ID = "3", Key = "3", Value = "3" };
             db.Insert(input3);
-            var input1 = new StringStringStringItem { ID = "1", Key = "1", Value = "1" };
+            var input1 = new StringStringStringDataItem { ID = "1", Key = "1", Value = "1" };
             db.Insert(input1);
-            var input2 = new StringStringStringItem { ID = "2", Key = "2", Value = "2" };
+            var input2 = new StringStringStringDataItem { ID = "2", Key = "2", Value = "2" };
             db.Insert(input2);
 
             Assert.IsTrue(db.DataItemList[0].Equals(input0));
@@ -290,14 +290,14 @@ namespace BPlusTreeUnitTestProject.KVOTest
             int maxDataBlockItemCount = 2;
             DataBase<string, string, string> db = new KVO<string, string, string>(2,2);
 
-            var input0 = new StringStringStringItem { ID = "0", Key = "0", Value = "0" };
+            var input0 = new StringStringStringDataItem { ID = "0", Key = "0", Value = "0" };
             db.Insert(input0);
-            var input3 = new StringStringStringItem { ID = "3", Key = "3", Value = "3" };
+            var input3 = new StringStringStringDataItem { ID = "3", Key = "3", Value = "3" };
             db.Insert(input3);
 
-            var input2 = new StringStringStringItem { ID = "2", Key = "2", Value = "2" };
+            var input2 = new StringStringStringDataItem { ID = "2", Key = "2", Value = "2" };
             db.Insert(input2);
-            var input1 = new StringStringStringItem { ID = "1", Key = "1", Value = "1" };
+            var input1 = new StringStringStringDataItem { ID = "1", Key = "1", Value = "1" };
             db.Insert(input1);
 
 
@@ -313,14 +313,14 @@ namespace BPlusTreeUnitTestProject.KVOTest
             int maxDataBlockItemCount = 2;
             DataBase<string, string, string> db = new KVO<string, string, string>(2,2);
 
-            var input1 = new StringStringStringItem { ID = "1", Key = "1", Value = "1" };
+            var input1 = new StringStringStringDataItem { ID = "1", Key = "1", Value = "1" };
             db.Insert(input1);
-            var input0 = new StringStringStringItem { ID = "0", Key = "0", Value = "0" };
+            var input0 = new StringStringStringDataItem { ID = "0", Key = "0", Value = "0" };
             db.Insert(input0);
 
-            var input2 = new StringStringStringItem { ID = "2", Key = "2", Value = "2" };
+            var input2 = new StringStringStringDataItem { ID = "2", Key = "2", Value = "2" };
             db.Insert(input2);
-            var input3 = new StringStringStringItem { ID = "3", Key = "3", Value = "3" };
+            var input3 = new StringStringStringDataItem { ID = "3", Key = "3", Value = "3" };
             db.Insert(input3);
 
             Assert.IsTrue(db.DataItemList[0].Equals(input0));
@@ -335,15 +335,15 @@ namespace BPlusTreeUnitTestProject.KVOTest
             int maxDataBlockItemCount = 2;
             DataBase<string, string, string> db = new KVO<string, string, string>(2,2);
 
-            var input1 = new StringStringStringItem { ID = "1", Key = "1", Value = "1" };
+            var input1 = new StringStringStringDataItem { ID = "1", Key = "1", Value = "1" };
             db.Insert(input1);
-            var input0 = new StringStringStringItem { ID = "0", Key = "0", Value = "0" };
+            var input0 = new StringStringStringDataItem { ID = "0", Key = "0", Value = "0" };
             db.Insert(input0);
 
-            var input3 = new StringStringStringItem { ID = "3", Key = "3", Value = "3" };
+            var input3 = new StringStringStringDataItem { ID = "3", Key = "3", Value = "3" };
             db.Insert(input3);
 
-            var input2 = new StringStringStringItem { ID = "2", Key = "2", Value = "2" };
+            var input2 = new StringStringStringDataItem { ID = "2", Key = "2", Value = "2" };
             db.Insert(input2);
 
 
@@ -359,16 +359,16 @@ namespace BPlusTreeUnitTestProject.KVOTest
             int maxDataBlockItemCount = 2;
             DataBase<string, string, string> db = new KVO<string, string, string>(2,2);
 
-            var input1 = new StringStringStringItem { ID = "1", Key = "1", Value = "1" };
+            var input1 = new StringStringStringDataItem { ID = "1", Key = "1", Value = "1" };
             db.Insert(input1);
 
-            var input2 = new StringStringStringItem { ID = "2", Key = "2", Value = "2" };
+            var input2 = new StringStringStringDataItem { ID = "2", Key = "2", Value = "2" };
             db.Insert(input2);
 
-            var input0 = new StringStringStringItem { ID = "0", Key = "0", Value = "0" };
+            var input0 = new StringStringStringDataItem { ID = "0", Key = "0", Value = "0" };
             db.Insert(input0);
 
-            var input3 = new StringStringStringItem { ID = "3", Key = "3", Value = "3" };
+            var input3 = new StringStringStringDataItem { ID = "3", Key = "3", Value = "3" };
             db.Insert(input3);
 
             Assert.IsTrue(db.DataItemList[0].Equals(input0));
@@ -383,16 +383,16 @@ namespace BPlusTreeUnitTestProject.KVOTest
             int maxDataBlockItemCount = 2;
             DataBase<string, string, string> db = new KVO<string, string, string>(2,2);
 
-            var input1 = new StringStringStringItem { ID = "1", Key = "1", Value = "1" };
+            var input1 = new StringStringStringDataItem { ID = "1", Key = "1", Value = "1" };
             db.Insert(input1);
 
-            var input2 = new StringStringStringItem { ID = "2", Key = "2", Value = "2" };
+            var input2 = new StringStringStringDataItem { ID = "2", Key = "2", Value = "2" };
             db.Insert(input2);
 
-            var input3 = new StringStringStringItem { ID = "3", Key = "3", Value = "3" };
+            var input3 = new StringStringStringDataItem { ID = "3", Key = "3", Value = "3" };
             db.Insert(input3);
 
-            var input0 = new StringStringStringItem { ID = "0", Key = "0", Value = "0" };
+            var input0 = new StringStringStringDataItem { ID = "0", Key = "0", Value = "0" };
             db.Insert(input0);
 
             Assert.IsTrue(db.DataItemList[0].Equals(input0));
@@ -407,14 +407,14 @@ namespace BPlusTreeUnitTestProject.KVOTest
             int maxDataBlockItemCount = 2;
             DataBase<string, string, string> db = new KVO<string, string, string>(2,2);
 
-            var input2 = new StringStringStringItem { ID = "2", Key = "2", Value = "2" };
+            var input2 = new StringStringStringDataItem { ID = "2", Key = "2", Value = "2" };
             db.Insert(input2);
-            var input0 = new StringStringStringItem { ID = "0", Key = "0", Value = "0" };
+            var input0 = new StringStringStringDataItem { ID = "0", Key = "0", Value = "0" };
             db.Insert(input0);
-            var input1 = new StringStringStringItem { ID = "1", Key = "1", Value = "1" };
+            var input1 = new StringStringStringDataItem { ID = "1", Key = "1", Value = "1" };
             db.Insert(input1);
 
-            var input3 = new StringStringStringItem { ID = "3", Key = "3", Value = "3" };
+            var input3 = new StringStringStringDataItem { ID = "3", Key = "3", Value = "3" };
             db.Insert(input3);
 
             Assert.IsTrue(db.DataItemList[0].Equals(input0));
@@ -429,13 +429,13 @@ namespace BPlusTreeUnitTestProject.KVOTest
             int maxDataBlockItemCount = 2;
             DataBase<string, string, string> db = new KVO<string, string, string>(2,2);
 
-            var input2 = new StringStringStringItem { ID = "2", Key = "2", Value = "2" };
+            var input2 = new StringStringStringDataItem { ID = "2", Key = "2", Value = "2" };
             db.Insert(input2);
-            var input0 = new StringStringStringItem { ID = "0", Key = "0", Value = "0" };
+            var input0 = new StringStringStringDataItem { ID = "0", Key = "0", Value = "0" };
             db.Insert(input0);
-            var input3 = new StringStringStringItem { ID = "3", Key = "3", Value = "3" };
+            var input3 = new StringStringStringDataItem { ID = "3", Key = "3", Value = "3" };
             db.Insert(input3);
-            var input1 = new StringStringStringItem { ID = "1", Key = "1", Value = "1" };
+            var input1 = new StringStringStringDataItem { ID = "1", Key = "1", Value = "1" };
             db.Insert(input1);
 
             Assert.IsTrue(db.DataItemList[0].Equals(input0));

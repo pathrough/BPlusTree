@@ -21,7 +21,23 @@ namespace BPlusTree
             _IndexBlockSize = 128;
             _DataBlockSize = 128;
             _Host = host;
+            _RootIndexBlock = CreateIndexBlock(0);//一般第一个就是根索引块
         }
+
+        readonly IndexBlock<O, K, V> _RootIndexBlock;
+
+        /// <summary>
+        /// 根索引块,数据访问的入口
+        /// </summary>
+        public IndexBlock<O, K, V> RootIndexBlock
+        {
+            get
+            {                
+                return _RootIndexBlock;
+            }
+        } 
+
+        
 
         readonly Host<O, K, V> _Host;
 
@@ -85,19 +101,7 @@ namespace BPlusTree
             }
         }
 
-        readonly IndexBlock<O, K, V> _RootIndexBlock;
-
-        /// <summary>
-        /// 根索引块,数据访问的入口
-        /// </summary>
-        public IndexBlock<O, K, V> RootIndexBlock
-        {
-            get 
-            {
-                //todo:从文件中读取数据初始化，根索引块，所有数据查询都是从这里开始的
-                return _RootIndexBlock; 
-            }
-        } 
+        
 
 
         public int DataItemCount
@@ -341,6 +345,12 @@ namespace BPlusTree
         {
             return this.Host.CreateIndexBlock(this,indexItemList);
         }
+
+        public IndexBlock<O, K, V> CreateIndexBlock(long position)
+        {
+            return this.Host.CreateIndexBlock( position,this);
+        }
+
 
         public IndexItem<O, K, V> CreateIndexItem(DataBlock<O, K, V> dataBlock, DataItem<O, K, V> dataItem, IndexBlock<O, K, V> indexBlock)
         {

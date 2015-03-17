@@ -17,7 +17,7 @@ namespace ConsoleApplication1
             {
                 string input = Console.ReadLine();
                 string[] inputs = input.Split(',');
-                host.Insert(new StringStringStringDataItem { ID = inputs[0], Key = inputs[1], Value = inputs[2] });
+                host.Insert(new StringStringStringDataItem(inputs[0], inputs[1], inputs[2]));
                 Console.WriteLine("----------------------------");
                 foreach(var db in host.DataBases)
                 {

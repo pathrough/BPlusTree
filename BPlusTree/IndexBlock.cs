@@ -26,6 +26,11 @@ namespace BPlusTree
             //_Position = position;//新创建的位置是由于文件指针觉得的
         }
 
+        /// <summary>
+        /// 从磁盘初始化索引块
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="dataBase"></param>
         public IndexBlock(long position, DataBase<O, K, V> dataBase)
         {
             this._DataBase = dataBase;
@@ -46,7 +51,7 @@ namespace BPlusTree
             int index = 0;
             for (int i = 0; i < this._Count; i++)
             {
-                //indexItem有多长
+                //indexItem有多长，固定长度的IndexItem可以没有这个，这个应该在具体的类型中实现
                 byte[] bsLen = bs.GetSubArray(index, 4);
                 index = index + 4;
                 int len = bsLen.ToInt32();
