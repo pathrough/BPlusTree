@@ -25,7 +25,7 @@ namespace ConsoleApplication1
                     {
                         Console.WriteLine(item.ID+"-"+item.Key+"-"+item.Value);
                     }
-                    Console.WriteLine("----------------------------");
+                    Console.WriteLine("------------dd----------------");
                 }
             }                
         }
